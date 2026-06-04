@@ -118,6 +118,6 @@ Database:
 
 ## Author
 
-Sushil Bhoybar
-Pratik Jadhav
-Ashish Shinde
+Sushil Bhoybar,
+Pratik Jadhav,
+Ashish Shinde.
