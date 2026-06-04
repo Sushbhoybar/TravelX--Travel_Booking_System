@@ -1,5 +1,7 @@
 # TravelX Frontend Setup Guide
-## Structure
+# Frontend Structure
+
+```text
 travelx-bus-booking-system/
 │
 └── frontend/
@@ -17,12 +19,9 @@ travelx-bus-booking-system/
     │   ├── layouts/
     │   │
     │   ├── pages/
-    │   │
     │   │   ├── customer/
-    │   │
     │   │   ├── agent/
-    │   │
-    │   │   |── admin/
+    │   │   └── admin/
     │   │
     │   ├── routes/
     │   │
@@ -33,6 +32,8 @@ travelx-bus-booking-system/
     │
     ├── package.json
     └── README.md
+```
+
 
 ## Prerequisites
 
