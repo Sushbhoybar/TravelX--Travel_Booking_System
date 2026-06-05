@@ -1,14 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
 
 // import Login from './pages/Login';
-import ChooseRegister from './pages/ChooseRegister';
-import AgentRegister from "./pages/AgentRegister";
-import AgentDashboard from "./pages/AgentDashboard";
-import AddBus from "./pages/AddBus";
-import ManageTrips from "./pages/ManageTrips";
-import ViewBookings from "./pages/ViewBookings";
-import PassengerList from "./pages/PassengerList";
-import BusStatus from "./pages/BusStatus";
+import ChooseRegister from './pages/agent/ChooseRegister';
+import AgentRegister from "./pages/agent/AgentRegister";
+import AgentDashboard from "./pages/agent/AgentDashboard";
+import AddBus from "./pages/agent/AddBus";
+import ManageTrips from "./pages/agent/ManageTrips";
+import ViewBookings from "./pages/agent/ViewBookings";
+import PassengerList from "./pages/agent/PassengerList";
+import BusStatus from "./pages/agent/BusStatus";
 
 function App() {
   return (
