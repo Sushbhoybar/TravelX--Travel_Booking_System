@@ -94,6 +94,7 @@ npm install react-router-dom
 npm install axios
 npm install react-icons
 npm install bootstrap
+npm install tailwindcss @tailwindcss/vite
 ```
 
 ---
