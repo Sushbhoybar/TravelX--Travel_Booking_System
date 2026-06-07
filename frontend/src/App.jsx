@@ -10,6 +10,12 @@ import ViewBookings from "./pages/agent/ViewBookings";
 import PassengerList from "./pages/agent/PassengerList";
 import BusStatus from "./pages/agent/BusStatus";
 
+
+
+
+
+
+
 function App() {
   return (
     <Routes>
@@ -22,6 +28,11 @@ function App() {
       <Route path="/agent/view-bookings" element={<ViewBookings />} />
       <Route path="/agent/passengers/:tripId" element={<PassengerList />} />
       <Route path="/agent/bus-status" element={<BusStatus />} />
+      
+      
+
+
+
     </Routes>
   );
 }

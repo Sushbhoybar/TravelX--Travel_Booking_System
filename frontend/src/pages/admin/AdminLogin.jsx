@@ -12,7 +12,7 @@ function AdminLogin() {
         </div>
 
         <h2 className="login-title">
-          Travel Booking System
+          TravelX - Travel Booking System
         </h2>
 
         <p className="login-subtitle">
