@@ -1,6 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
 
-import Login from './pages/Login';
+import Login from './pages/customer/Login';
+import Register from "./pages/customer/Register";
+import Dashboard from "./pages/customer/Dashboard";
+import SearchBus from "./pages/customer/SearchBus";
+
 import ChooseRegister from './pages/agent/ChooseRegister';
 import AgentRegister from "./pages/agent/AgentRegister";
 import AgentDashboard from "./pages/agent/AgentDashboard";
@@ -19,7 +23,10 @@ import BusStatus from "./pages/agent/BusStatus";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register/customer" element={<Register />}/>
+      <Route path="/dashboard" element={<Dashboard />}/>
+      <Route path="/search-bus" element={<SearchBus />}/>
       <Route path="/register" element={<ChooseRegister />} />
       <Route path="/register/agent" element={<AgentRegister />} />
       <Route path="/agent/dashboard" element={<AgentDashboard />} />

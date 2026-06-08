@@ -1,159 +1,241 @@
-import "../../styles/customer.css";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function Dashboard() {
+import {
+  FaSearch,
+  FaBus,
+  FaTicketAlt,
+  FaUser,
+  FaHeadset,
+  FaSignOutAlt,
+  FaArrowRight,
+} from "react-icons/fa";
+
+export default function Dashboard() {
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    navigate("/");
+  };
+
   return (
-    <div className="travelx-dashboard">
+    <div className="fixed inset-0 bg-slate-100 overflow-y-auto">
 
-      {}
+      <div className="max-w-7xl mx-auto px-4 py-5">
 
-      <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow">
-        <div className="container">
+        {/* Title */}
 
-          <span className="navbar-brand fw-bold">
-            🚌 TravelX Booking System
-          </span>
+        <div className="text-center mb-6">
 
-          <button
-            className="btn btn-light"
-            onClick={() => navigate("/")}
-          >
-            Logout
-          </button>
+          <h1 className="!text-4xl !font-black !m-0 !text-slate-900">
+            TravelX
+          </h1>
 
         </div>
-      </nav>
 
-      {}
+        {/* Welcome */}
 
-      <div className="container py-5">
+        <div className="text-center mb-8">
 
-        {}
-
-        <div className="welcome-card mb-4">
-
-          <h2 className="fw-bold">
-            Welcome, Passenger ! 👋
+          <h2 className="!text-5xl !font-black !text-slate-900 !m-0">
+            Welcome, Sushil!
           </h2>
 
-          <p className="text-muted mb-0">
+          <p className="text-slate-600 text-xl mt-3">
             Plan your journey and manage your bookings easily.
           </p>
 
         </div>
 
-        {}
+        {/* Search Banner */}
 
-        <div
-          className="search-card mb-4"
-          onClick={() => navigate("/search-bus")}
-        >
-          <div>
-            <h4>🔍 Search Buses</h4>
-            <p className="mb-0">
-              Find buses, compare prices and book tickets.
+        
+
+        {/* Four Cards */}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
+
+          {/* Search Bus */}
+
+          <div
+            onClick={() => navigate("/search-bus")}
+            className="bg-white rounded-3xl border border-slate-200 shadow-md p-6 cursor-pointer hover:shadow-lg transition"
+          >
+
+            <div className="flex justify-center mb-4">
+
+              <FaBus className="text-5xl text-blue-600" />
+
+            </div>
+
+            <h3 className="text-2xl font-bold text-center">
+              Search Bus
+            </h3>
+
+            <p className="text-slate-600 text-center mt-3">
+              Search buses by source,
+              destination and date.
             </p>
+
           </div>
 
-          <h3>➜</h3>
+          {/* Bookings */}
+
+          <div
+            onClick={() => navigate("/my-bookings")}
+            className="bg-white rounded-3xl border border-slate-200 shadow-md p-6 cursor-pointer hover:shadow-lg transition"
+          >
+
+            <div className="flex justify-center mb-4">
+
+              <FaTicketAlt className="text-5xl text-green-600" />
+
+            </div>
+
+            <h3 className="text-2xl font-bold text-center">
+              My Bookings
+            </h3>
+
+            <p className="text-slate-600 text-center mt-3">
+              View bookings, tickets
+              and journey details.
+            </p>
+
+          </div>
+
+          {/* Profile */}
+
+          <div
+            onClick={() => navigate("/profile")}
+            className="bg-white rounded-3xl border border-slate-200 shadow-md p-6 cursor-pointer hover:shadow-lg transition"
+          >
+
+            <div className="flex justify-center mb-4">
+
+              <FaUser className="text-5xl text-purple-600" />
+
+            </div>
+
+            <h3 className="text-2xl font-bold text-center">
+              Profile
+            </h3>
+
+            <p className="text-slate-600 text-center mt-3">
+              View and update your
+              personal information.
+            </p>
+
+          </div>
+
+          {/* Support */}
+
+          <div
+            onClick={() => navigate("/support")}
+            className="bg-white rounded-3xl border border-slate-200 shadow-md p-6 cursor-pointer hover:shadow-lg transition"
+          >
+
+            <div className="flex justify-center mb-4">
+
+              <FaHeadset className="text-5xl text-orange-500" />
+
+            </div>
+
+            <h3 className="text-2xl font-bold text-center">
+              Help & Support
+            </h3>
+
+            <p className="text-slate-600 text-center mt-3">
+              Get help and contact
+              customer support.
+            </p>
+
+          </div>
+
         </div>
 
-        {}
+        {/* Upcoming Journey */}
 
-        <div className="row g-4">
+        <div className="bg-white rounded-3xl border border-slate-200 shadow-md p-6 mb-6">
 
-          <div className="col-md-4">
+          <div className="flex justify-between items-center border-b pb-4 mb-4">
 
-            <div className="feature-card">
+            <h3 className="text-3xl font-bold text-slate-900">
+              Upcoming Journey
+            </h3>
 
-              <h2>🎫</h2>
-
-              <h5>My Bookings</h5>
-
-              <p>
-                View all your bookings and journey details.
-              </p>
-
-            </div>
+            <button className="text-blue-600 font-semibold">
+              View All Bookings
+            </button>
 
           </div>
 
-          <div className="col-md-4">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
 
-            <div className="feature-card">
+            <div>
 
-              <h2>👤</h2>
+              <h4 className="text-2xl font-bold">
+                Shivneri Travels
+              </h4>
 
-              <h5>Profile</h5>
+              <p className="text-slate-600 mt-1">
+                Pune → Latur
+              </p>
 
-              <p>
-                Update personal information.
+              <p className="text-slate-500">
+                20 Apr 2026 | 10:00 AM
               </p>
 
             </div>
 
-          </div>
-
-          <div className="col-md-4">
-
-            <div className="feature-card">
-
-              <h2>🎧</h2>
-
-              <h5>Help & Support</h5>
-
-              <p>
-                Contact customer support.
+            <div>
+              <p className="text-slate-500">
+                PNR No.
               </p>
-
+              <p className="font-bold">
+                TX101
+              </p>
             </div>
 
-          </div>
-
-        </div>
-
-        {}
-
-        <div className="upcoming-card mt-5">
-
-          <h4 className="mb-4">
-            Upcoming Journey
-          </h4>
-
-          <div className="row align-items-center">
-
-            <div className="col-md-8">
-
-              <h5>🚌 Ashoka Travels</h5>
-
-              <p className="mb-1">
-                Pune ➜ Mumbai
+            <div>
+              <p className="text-slate-500">
+                Seats
               </p>
-
-              <small>
-                20 April 2026 | 10:00 AM
-              </small>
-
+              <p className="font-bold">
+                A1, A2
+              </p>
             </div>
 
-            <div className="col-md-4 text-end">
+            <div>
 
-              <span className="badge bg-success fs-6">
+              <span className="px-4 py-2 rounded-lg border font-semibold">
                 Confirmed
               </span>
 
             </div>
 
+            <button className="bg-slate-900 text-white px-6 py-3 rounded-xl font-semibold hover:bg-slate-800">
+              View Details
+            </button>
+
           </div>
 
         </div>
+
+        {/* Logout */}
+
+        <button
+          onClick={handleLogout}
+          className="w-full bg-white border border-slate-300 rounded-2xl py-4 font-bold text-xl flex justify-center items-center gap-3 hover:bg-slate-50"
+        >
+
+          <FaSignOutAlt />
+
+          Logout
+
+        </button>
 
       </div>
 
     </div>
   );
 }
-
-export default Dashboard;
