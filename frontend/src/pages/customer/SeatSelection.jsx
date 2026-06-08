@@ -417,8 +417,15 @@ export default function SeatSelection() {
                 }
                 onClick={() =>
                   navigate(
-                    "/passenger-details"
-                  )
+                    "/passenger-details", {
+  state: {
+    bus,
+    selectedSeats,
+    boarding,
+    dropping,
+    totalAmount,
+  },
+})
                 }
                 className="
                   px-8 py-3

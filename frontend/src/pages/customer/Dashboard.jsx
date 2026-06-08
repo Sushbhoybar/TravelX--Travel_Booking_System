@@ -23,7 +23,7 @@ export default function Dashboard() {
       title: "My Bookings",
       icon: <FaTicketAlt />,
       color: "text-green-600",
-      route: "/my-bookings",
+      route: "/booking-history",
     },
     {
       title: "Profile",
@@ -125,7 +125,7 @@ export default function Dashboard() {
             </h3>
 
             <button
-              onClick={() => navigate("/my-bookings")}
+              onClick={() => navigate("/booking-history")}
               className="text-blue-600 font-semibold"
             >
               View All

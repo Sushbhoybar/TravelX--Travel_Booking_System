@@ -7,6 +7,14 @@ import SearchBus from "./pages/customer/SearchBus";
 import BusList from "./pages/customer/BusList";
 import BusDetails1 from "./pages/customer/BusDetails";
 import SeatSelection from "./pages/customer/SeatSelection";
+import PassengerDetails from "./pages/customer/PassengerDetails";
+import Payment from "./pages/customer/Payment";
+import BookingHistory from "./pages/customer/BookingHistory";
+import Profile from "./pages/customer/Profile";
+import Feedback from "./pages/customer/Feedback";
+import Support from "./pages/customer/Support";
+import ViewBookingDetails from "./pages/customer/ViewBookingDetails";
+
 
 import ChooseRegister from './pages/agent/ChooseRegister';
 import AgentRegister from "./pages/agent/AgentRegister";
@@ -36,6 +44,12 @@ function App() {
        <Route path="/bus-list" element={<BusList />} />
       <Route path="/bus-details/:id" element={<BusDetails1 />} />
       <Route path="/seat-selection/:id" element={<SeatSelection />}/>
+      <Route path="/passenger-details" element={<PassengerDetails />}/>
+      <Route path="/booking-history" element={<BookingHistory />}/>
+      <Route path="/profile" element={<Profile />}/>
+      <Route path="/feedback" element={<Feedback />}/>
+      <Route path="/support" element={<Support />}/>
+      <Route path="/booking-details/:id" element={<ViewBookingDetails />}/>
 
       <Route path="/register" element={<ChooseRegister />} />
       <Route path="/register/agent" element={<AgentRegister />} />
@@ -45,7 +59,7 @@ function App() {
       <Route path="/agent/view-bookings" element={<ViewBookings />} />
       <Route path="/agent/passengers/:tripId" element={<PassengerList />} />
       <Route path="/agent/bus-status" element={<BusStatus />} />
-
+      <Route path="/payment" element={<Payment />}/>
 
       <Route path="/admin-login" element={<AdminLogin />} />
 

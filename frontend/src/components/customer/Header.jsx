@@ -49,8 +49,8 @@ export default function Header() {
             </Link>
 
             <Link
-              to="/my-bookings"
-              className={navButtonClass("/my-bookings")}
+              to="/booking-history"
+              className={navButtonClass("/booking-history")}
             >
               <FaTicketAlt />
               Booking
