@@ -1,31 +1,46 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   FaExchangeAlt,
   FaSearch,
-  FaSignOutAlt,
+  FaBus,
 } from "react-icons/fa";
+
+import Header from "../../components/customer/Header";
+import Footer from "../../components/customer/Footer";
 
 export default function SearchBus() {
   const navigate = useNavigate();
 
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
+  const [tripData, setTripData] = useState({
+    from: "",
+    to: "",
+    journeyDate: "",
+  });
 
-  const [day, setDay] = useState("");
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("");
+  const handleChange = (e) => {
+    setTripData({
+      ...tripData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const swapCities = () => {
-    const temp = from;
-    setFrom(to);
-    setTo(temp);
+    setTripData({
+      ...tripData,
+      from: tripData.to,
+      to: tripData.from,
+    });
   };
 
   const handleSearch = (e) => {
     e.preventDefault();
 
-    if (!from || !to || !day || !month || !year) {
+    if (
+      !tripData.from ||
+      !tripData.to ||
+      !tripData.journeyDate
+    ) {
       alert("Please fill all fields");
       return;
     }
@@ -34,58 +49,186 @@ export default function SearchBus() {
   };
 
   return (
-    <div
-      className="min-h-screen bg-slate-100 flex flex-col"
-      style={{
-        width: "100vw",
-        maxWidth: "100vw",
-        position: "relative",
-        left: "50%",
-        transform: "translateX(-50%)",
-      }}
-    >
-      {/* Header */}
+    <div className="min-h-screen bg-slate-100 flex flex-col">
 
-      <div className="px-4 pt-4">
+      <Header />
 
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 px-4 py-2">
+      <div className="flex-1 px-4 py-8">
 
-          <div className="flex items-center justify-between">
+        <div className="max-w-5xl mx-auto">
 
-            <button
-              onClick={() => navigate("/")}
-              className="flex items-center gap-2 text-red-600 text-sm font-semibold"
-            >
-              <FaSignOutAlt />
-              Logout
-            </button>
+          {/* Hero Section */}
 
-            <div className="text-black font-black text-xl">
-              TravelX
+          <div className="text-center mb-8">
+
+            <div className="flex justify-center mb-4">
+              <FaBus className="text-5xl text-blue-600" />
             </div>
 
-            <div className="flex items-center gap-3 md:gap-6">
+            <h1 className="text-4xl md:text-5xl font-black text-slate-900">
+              Search Your Bus
+            </h1>
 
-              <Link
-                to="/booking-history"
-                className="text-sm font-medium text-slate-700 hover:text-blue-600"
-              >
-                Booking
-              </Link>
+            <p className="text-slate-600 text-lg mt-3">
+              Find comfortable buses at the best prices for your journey.
+            </p>
 
-              <Link
-                to="/support"
-                className="text-sm font-medium text-slate-700 hover:text-blue-600"
-              >
-                Help
-              </Link>
+          </div>
 
-              <Link
-                to="/profile"
-                className="text-sm font-medium text-slate-700 hover:text-blue-600"
-              >
-                Profile
-              </Link>
+          {/* Search Card */}
+
+          <div className="bg-white rounded-3xl border border-slate-200 shadow-lg p-8">
+
+            <form onSubmit={handleSearch}>
+
+              <div className="grid lg:grid-cols-[1fr_auto_1fr_1fr] gap-4 items-end">
+
+                {/* From */}
+
+                <div>
+
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">
+                    From
+                  </label>
+
+                  <select
+                    name="from"
+                    value={tripData.from}
+                    onChange={handleChange}
+                    className="w-full h-12 px-3 border border-gray-300 rounded-xl outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
+                  >
+                    <option value="">
+                      Select Source
+                    </option>
+
+                    <option>Pune</option>
+                    <option>Mumbai</option>
+                    <option>Latur</option>
+                    <option>Nagpur</option>
+                    <option>Nashik</option>
+
+                  </select>
+
+                </div>
+
+                {/* Swap */}
+
+                <div className="flex justify-center">
+
+                  <button
+                    type="button"
+                    onClick={swapCities}
+                    className="w-12 h-12 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center justify-center transition"
+                  >
+                    <FaExchangeAlt />
+                  </button>
+
+                </div>
+
+                {/* To */}
+
+                <div>
+
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">
+                    To
+                  </label>
+
+                  <select
+                    name="to"
+                    value={tripData.to}
+                    onChange={handleChange}
+                    className="w-full h-12 px-3 border border-gray-300 rounded-xl outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
+                  >
+                    <option value="">
+                      Select Destination
+                    </option>
+
+                    <option>Pune</option>
+                    <option>Mumbai</option>
+                    <option>Latur</option>
+                    <option>Nagpur</option>
+                    <option>Nashik</option>
+
+                  </select>
+
+                </div>
+
+                {/* Journey Date */}
+
+                <div>
+
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">
+                    Journey Date
+                  </label>
+
+                  <input
+                    type="date"
+                    name="journeyDate"
+                    value={tripData.journeyDate}
+                    onChange={handleChange}
+                    required
+                    className="w-full h-12 px-3 border border-gray-300 rounded-xl text-[15px] outline-none cursor-pointer focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
+                  />
+
+                </div>
+
+              </div>
+
+              {/* Search Button */}
+
+              <div className="mt-6">
+
+                <button
+                  type="submit"
+                  className="w-full h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-lg flex items-center justify-center gap-3 transition"
+                >
+                  <FaSearch />
+                  Search Available Buses
+                </button>
+
+              </div>
+
+            </form>
+
+          </div>
+
+          {/* Info Cards */}
+
+          <div className="grid md:grid-cols-3 gap-4 mt-8">
+
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+
+              <h3 className="font-bold text-lg">
+                1000+
+              </h3>
+
+              <p className="text-slate-600">
+                Routes Available
+              </p>
+
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+
+              <h3 className="font-bold text-lg">
+                500+
+              </h3>
+
+              <p className="text-slate-600">
+                Trusted Operators
+              </p>
+
+            </div>
+
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+
+              <h3 className="font-bold text-lg">
+                24×7
+              </h3>
+
+              <p className="text-slate-600">
+                Customer Support
+              </p>
 
             </div>
 
@@ -95,179 +238,7 @@ export default function SearchBus() {
 
       </div>
 
-      {/* Main Content */}
-
-      <div className="flex-1 flex items-center justify-center px-4 py-6">
-
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-md border border-slate-200 p-6">
-
-          <h2 className="text-center text-2xl font-bold text-black mb-6">
-            Search Bus
-          </h2>
-
-          <form
-            onSubmit={handleSearch}
-            className="space-y-4"
-          >
-
-            {/* FROM */}
-
-            <div>
-
-              <label className="block text-sm font-semibold mb-2">
-                From
-              </label>
-
-              <select
-                value={from}
-                onChange={(e) => setFrom(e.target.value)}
-                className="w-full h-12 border border-slate-300 rounded-xl px-3"
-              >
-                <option value="">
-                  Select Source
-                </option>
-
-                <option>Pune</option>
-                <option>Mumbai</option>
-                <option>Latur</option>
-                <option>Nagpur</option>
-                <option>Nashik</option>
-
-              </select>
-
-            </div>
-
-            {/* SWAP */}
-
-            <div className="flex justify-center">
-
-              <button
-                type="button"
-                onClick={swapCities}
-                className="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center"
-              >
-                <FaExchangeAlt />
-              </button>
-
-            </div>
-
-            {/* TO */}
-
-            <div>
-
-              <label className="block text-sm font-semibold mb-2">
-                To
-              </label>
-
-              <select
-                value={to}
-                onChange={(e) => setTo(e.target.value)}
-                className="w-full h-12 border border-slate-300 rounded-xl px-3"
-              >
-                <option value="">
-                  Select Destination
-                </option>
-
-                <option>Pune</option>
-                <option>Mumbai</option>
-                <option>Latur</option>
-                <option>Nagpur</option>
-                <option>Nashik</option>
-
-              </select>
-
-            </div>
-
-            {/* JOURNEY DATE */}
-
-            <div>
-
-              <label className="block text-sm font-semibold mb-2">
-                Journey Date
-              </label>
-
-              <div className="grid grid-cols-3 gap-2">
-
-                <select
-                  value={day}
-                  onChange={(e) => setDay(e.target.value)}
-                  className="h-12 border border-slate-300 rounded-xl px-2"
-                >
-                  <option value="">
-                    Day
-                  </option>
-
-                  {[...Array(31)].map((_, i) => (
-                    <option key={i + 1}>
-                      {i + 1}
-                    </option>
-                  ))}
-                </select>
-
-                <select
-                  value={month}
-                  onChange={(e) => setMonth(e.target.value)}
-                  className="h-12 border border-slate-300 rounded-xl px-2"
-                >
-                  <option value="">
-                    Month
-                  </option>
-
-                  <option>Jan</option>
-                  <option>Feb</option>
-                  <option>Mar</option>
-                  <option>Apr</option>
-                  <option>May</option>
-                  <option>Jun</option>
-                  <option>Jul</option>
-                  <option>Aug</option>
-                  <option>Sep</option>
-                  <option>Oct</option>
-                  <option>Nov</option>
-                  <option>Dec</option>
-
-                </select>
-
-                <select
-                  value={year}
-                  onChange={(e) => setYear(e.target.value)}
-                  className="h-12 border border-slate-300 rounded-xl px-2"
-                >
-                  <option value="">
-                    Year
-                  </option>
-
-                  <option>2026</option>
-                  <option>2027</option>
-                  <option>2028</option>
-
-                </select>
-
-              </div>
-
-            </div>
-
-            {/* SEARCH BUTTON */}
-
-            <button
-              type="submit"
-              className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold flex items-center justify-center gap-2"
-            >
-              <FaSearch />
-              Search Bus
-            </button>
-
-          </form>
-
-        </div>
-
-      </div>
-
-      {/* Footer */}
-
-      <footer className="bg-white border-t border-slate-200 py-3 text-center text-sm text-slate-500">
-        © 2026 TravelX. All Rights Reserved.
-      </footer>
+      <Footer />
 
     </div>
   );

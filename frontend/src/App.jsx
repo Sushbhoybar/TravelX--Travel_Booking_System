@@ -4,6 +4,9 @@ import Login from './pages/customer/Login';
 import Register from "./pages/customer/Register";
 import Dashboard from "./pages/customer/Dashboard";
 import SearchBus from "./pages/customer/SearchBus";
+import BusList from "./pages/customer/BusList";
+import BusDetails1 from "./pages/customer/BusDetails";
+import SeatSelection from "./pages/customer/SeatSelection";
 
 import ChooseRegister from './pages/agent/ChooseRegister';
 import AgentRegister from "./pages/agent/AgentRegister";
@@ -30,6 +33,10 @@ function App() {
       <Route path="/register/customer" element={<Register />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/search-bus" element={<SearchBus />} />
+       <Route path="/bus-list" element={<BusList />} />
+      <Route path="/bus-details/:id" element={<BusDetails1 />} />
+      <Route path="/seat-selection/:id" element={<SeatSelection />}/>
+
       <Route path="/register" element={<ChooseRegister />} />
       <Route path="/register/agent" element={<AgentRegister />} />
       <Route path="/agent/dashboard" element={<AgentDashboard />} />
