@@ -25,7 +25,7 @@ export default function Register() {
 
     alert("Registration Successful!");
 
-    navigate("/");
+    navigate("/login");
   };
 
   return (
@@ -207,7 +207,7 @@ export default function Register() {
 
           {/* Register Button */}
 
-          <button
+          <button onClick={handleSubmit}
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 transition text-white py-2.5 rounded-xl font-semibold mt-2"
           >

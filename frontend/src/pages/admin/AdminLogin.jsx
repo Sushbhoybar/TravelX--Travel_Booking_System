@@ -45,7 +45,7 @@ function AdminLogin() {
 
         <button
   className="btn login-btn w-100"
-  onClick={() => navigate("/dashboard")}
+  onClick={() => navigate("/admin-dashboard")}
   >
      Login
   </button>

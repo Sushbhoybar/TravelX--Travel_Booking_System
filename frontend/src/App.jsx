@@ -14,9 +14,12 @@ import ViewBookings from "./pages/agent/ViewBookings";
 import PassengerList from "./pages/agent/PassengerList";
 import BusStatus from "./pages/agent/BusStatus";
 
-
-
-
+import AdminLogin from "./pages/admin/AdminLogin";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import ManageUsers from "./pages/admin/ManageUsers";
+import ApproveBuses from "./pages/admin/ApproveBuses";
+import BusDetails from "./pages/admin/BusDetails";
+import ViewFeedback from "./pages/admin/ViewFeedback";
 
 
 
@@ -24,9 +27,9 @@ function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/register/customer" element={<Register />}/>
-      <Route path="/dashboard" element={<Dashboard />}/>
-      <Route path="/search-bus" element={<SearchBus />}/>
+      <Route path="/register/customer" element={<Register />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/search-bus" element={<SearchBus />} />
       <Route path="/register" element={<ChooseRegister />} />
       <Route path="/register/agent" element={<AgentRegister />} />
       <Route path="/agent/dashboard" element={<AgentDashboard />} />
@@ -35,9 +38,19 @@ function App() {
       <Route path="/agent/view-bookings" element={<ViewBookings />} />
       <Route path="/agent/passengers/:tripId" element={<PassengerList />} />
       <Route path="/agent/bus-status" element={<BusStatus />} />
-      
-      
 
+
+      <Route path="/admin-login" element={<AdminLogin />} />
+
+      <Route path="/admin-dashboard" element={<AdminDashboard />} />
+
+      <Route path="/users" element={<ManageUsers />} />
+
+      <Route path="/buses" element={<ApproveBuses />} />
+
+      <Route path="/bus-details" element={<BusDetails />} />
+
+      <Route path="/feedback" element={<ViewFeedback />} />
 
 
     </Routes>

@@ -51,7 +51,7 @@ function AdminDashboard() {
             <div className="col-md-6">
               <div
                 className="dashboard-card"
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/admin-login")}
               >
                 <h3>🚪 Logout</h3>
                 <p>Exit admin panel.</p>

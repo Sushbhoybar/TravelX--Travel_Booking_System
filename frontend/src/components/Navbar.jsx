@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 function Navbar() {
   return (
     <nav
-    className="navbar navbar-expand-lg shadow-sm"
-    style={{
-    background: "#1613ca"
-    }}>
-      
+      className="navbar navbar-expand-lg shadow-sm"
+      style={{
+        background: "#0ea5e9"
+      }}>
+
       <div className="container-fluid">
 
         <Link className="navbar-brand fw-bold" to="/dashboard">
