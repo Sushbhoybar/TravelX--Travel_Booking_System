@@ -65,7 +65,7 @@ function AgentDashboard() {
                 </div>
 
                 {/* Small Stats Section */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-8">
                     <div className="bg-white border border-gray-300 rounded-xl shadow-sm p-5">
                         <p className="text-gray-500 text-sm font-medium">Total Buses</p>
                         <h3 className="text-3xl font-bold text-gray-900 mt-2">12</h3>
@@ -80,15 +80,10 @@ function AgentDashboard() {
                         <p className="text-gray-500 text-sm font-medium">Bookings</p>
                         <h3 className="text-3xl font-bold text-gray-900 mt-2">156</h3>
                     </div>
-
-                    <div className="bg-white border border-gray-300 rounded-xl shadow-sm p-5">
-                        <p className="text-gray-500 text-sm font-medium">Today Revenue</p>
-                        <h3 className="text-3xl font-bold text-gray-900 mt-2">₹24,500</h3>
-                    </div>
                 </div>
 
                 {/* Dashboard Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                     {dashboardCards.map((card) => (
                         <div
                             key={card.title}

@@ -39,11 +39,8 @@ function AddBus() {
     };
 
     return (
-        <div className="min-h-screen bg-[#f5f7fb] flex justify-center items-start px-5 py-12 font-sans">
-            <div className="w-full max-w-xl bg-white border border-gray-300 rounded-xl px-8 py-9 shadow-md">
-                <div className="w-[75px] h-[75px] bg-[#eef3ff] text-[#1d4ed8] rounded-full mx-auto mb-4 flex items-center justify-center text-4xl">
-                    🚌
-                </div>
+        <div className="bg-[#f5f7fb] flex justify-center font-sans">
+            <div className="w-full max-w-xl bg-white border border-gray-300 px-8 py-9">
 
                 <h2 className="text-center text-3xl font-bold text-gray-900">
                     Add New Bus
@@ -54,7 +51,7 @@ function AddBus() {
                 </p>
 
                 <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
+                    <div className="mb-2">
                         <label className="block text-sm font-semibold text-gray-800 mb-2">
                             Bus Name
                         </label>
@@ -69,7 +66,7 @@ function AddBus() {
                         />
                     </div>
 
-                    <div className="mb-4">
+                    <div className="mb-2">
                         <label className="block text-sm font-semibold text-gray-800 mb-2">
                             Bus Number
                         </label>
@@ -84,7 +81,7 @@ function AddBus() {
                         />
                     </div>
 
-                    <div className="mb-4">
+                    <div className="mb-2">
                         <label className="block text-sm font-semibold text-gray-800 mb-2">
                             Bus Type
                         </label>
@@ -105,7 +102,7 @@ function AddBus() {
                         </select>
                     </div>
 
-                    <div className="mb-4">
+                    <div className="mb-2">
                         <label className="block text-sm font-semibold text-gray-800 mb-2">
                             Total Seats
                         </label>
@@ -121,7 +118,7 @@ function AddBus() {
                         />
                     </div>
 
-                    <div className="mb-5">
+                    <div className="mb-2">
                         <label className="block text-sm font-semibold text-gray-800 mb-2">
                             Seat Layout
                         </label>

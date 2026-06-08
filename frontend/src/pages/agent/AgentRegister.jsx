@@ -48,7 +48,7 @@ function AgentRegister() {
         <div className="min-h-screen bg-[#f5f7fb] flex justify-center items-start px-5 py-10 font-sans">
             <div className="w-full max-w-4xl bg-white border border-gray-300 rounded-xl px-8 py-9 shadow-md">
                 {/* Icon */}
-                <div className="w-[75px] h-[75px] bg-[#eef3ff] text-[#1d4ed8] rounded-full mx-auto mb-4 flex items-center justify-center text-4xl">
+                <div className="w-[75px] h-[75px] bg-[#eef3ff] text-[#1d4ed8] rounded-full mx-auto mb-2 flex items-center justify-center text-4xl">
                     👔
                 </div>
 
@@ -57,17 +57,17 @@ function AgentRegister() {
                     Agent Registration
                 </h2>
 
-                <p className="text-center text-gray-600 text-sm mt-2 mb-8">
+                <p className="text-center text-gray-600 text-sm mt-1 mb-2">
                     Create your agent account to add buses and manage trips
                 </p>
 
                 <form onSubmit={handleSubmit}>
                     {/* Basic Details */}
-                    <h3 className="text-lg font-bold text-blue-700 border-b border-gray-300 pb-2 mb-5">
+                    <h3 className="text-lg font-bold text-blue-700 border-b border-gray-300 pb-2 mb-2">
                         Basic Details
                     </h3>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div>
                             <label className="block text-sm font-semibold text-gray-800 mb-2">
                                 Agency Name
@@ -79,7 +79,7 @@ function AgentRegister() {
                                 onChange={handleChange}
                                 placeholder="Enter agency name"
                                 required
-                                className="w-full h-12 px-3 border border-gray-300 rounded-md text-[15px] outline-none focus:border-blue-700 focus:ring-4 focus:ring-blue-100"
+                                className="w-full h-12 px-3 border border-gray-300 outline-none focus:border-blue-700 focus:ring-4 focus:ring-blue-100"
                             />
                         </div>
 
@@ -158,13 +158,14 @@ function AgentRegister() {
                             />
                         </div>
                     </div>
+                    <br></br>
 
                     {/* Business Details */}
                     <h3 className="text-lg font-bold text-blue-700 border-b border-gray-300 pb-2 mt-8 mb-5">
                         Business Details
                     </h3>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div className="md:col-span-2">
                             <label className="block text-sm font-semibold text-gray-800 mb-2">
                                 Business Type
@@ -193,7 +194,7 @@ function AgentRegister() {
                                 value={formData.address}
                                 onChange={handleChange}
                                 placeholder="Enter complete business address"
-                                rows="3"
+                                rows="2"
                                 required
                                 className="w-full px-3 py-3 border border-gray-300 rounded-md text-[15px] outline-none resize-none focus:border-blue-700 focus:ring-4 focus:ring-blue-100"
                             ></textarea>
@@ -244,13 +245,14 @@ function AgentRegister() {
                             />
                         </div>
                     </div>
+                    <br></br>
 
                     {/* Verification Details */}
                     <h3 className="text-lg font-bold text-blue-700 border-b border-gray-300 pb-2 mt-8 mb-5">
                         Verification Details
                     </h3>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div>
                             <label className="block text-sm font-semibold text-gray-800 mb-2">
                                 GST Number
@@ -291,7 +293,7 @@ function AgentRegister() {
                                 required
                                 className="w-full border border-gray-300 rounded-md text-[15px] bg-white file:mr-4 file:h-12 file:px-4 file:border-0 file:bg-gray-900 file:text-white file:font-semibold hover:file:bg-blue-700"
                             />
-                            <p className="text-xs text-gray-500 mt-2">
+                            <p className="text-xs text-gray-500 mt-2 mb-4">
                                 Accepted formats: JPG, PNG, PDF
                             </p>
                         </div>
@@ -313,6 +315,7 @@ function AgentRegister() {
                         Back
                     </button>
                 </form>
+                <br></br>
 
                 <p className="text-center text-gray-700 text-sm mt-6">
                     Already have an account?{" "}

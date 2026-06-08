@@ -105,8 +105,8 @@ export default function Login() {
 
             <label className="flex items-center gap-2 text-slate-600">
 
-              <input type="checkbox" className="accent-blue-600"/>
-               {" "}Remember Me
+              <input type="checkbox" className="accent-blue-600" />
+              {" "}Remember Me
             </label>
 
             <button
@@ -148,7 +148,7 @@ export default function Login() {
             New User?{" "}
 
             <Link
-              to="/register/customer"
+              to="/register"
               className="text-blue-600 font-semibold hover:underline"
             >
               Register Now
