@@ -37,19 +37,20 @@ import ViewFeedback from "./pages/admin/ViewFeedback";
 function App() {
   return (
     <Routes>
+      <Route path="/" element={<Login />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register/customer" element={<Register />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/search-bus" element={<SearchBus />} />
-       <Route path="/bus-list" element={<BusList />} />
+      <Route path="/bus-list" element={<BusList />} />
       <Route path="/bus-details/:id" element={<BusDetails1 />} />
-      <Route path="/seat-selection/:id" element={<SeatSelection />}/>
-      <Route path="/passenger-details" element={<PassengerDetails />}/>
-      <Route path="/booking-history" element={<BookingHistory />}/>
-      <Route path="/profile" element={<Profile />}/>
-      <Route path="/feedback" element={<Feedback />}/>
-      <Route path="/support" element={<Support />}/>
-      <Route path="/booking-details/:id" element={<ViewBookingDetails />}/>
+      <Route path="/seat-selection/:id" element={<SeatSelection />} />
+      <Route path="/passenger-details" element={<PassengerDetails />} />
+      <Route path="/booking-history" element={<BookingHistory />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/feedback" element={<Feedback />} />
+      <Route path="/support" element={<Support />} />
+      <Route path="/booking-details/:id" element={<ViewBookingDetails />} />
 
       <Route path="/register" element={<ChooseRegister />} />
       <Route path="/register/agent" element={<AgentRegister />} />
@@ -59,7 +60,7 @@ function App() {
       <Route path="/agent/view-bookings" element={<ViewBookings />} />
       <Route path="/agent/passengers/:tripId" element={<PassengerList />} />
       <Route path="/agent/bus-status" element={<BusStatus />} />
-      <Route path="/payment" element={<Payment />}/>
+      <Route path="/payment" element={<Payment />} />
 
       <Route path="/admin-login" element={<AdminLogin />} />
 
