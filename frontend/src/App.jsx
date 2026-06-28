@@ -48,9 +48,10 @@ function App() {
       <Route path="/passenger-details" element={<PassengerDetails />} />
       <Route path="/booking-history" element={<BookingHistory />} />
       <Route path="/profile" element={<Profile />} />
-      <Route path="/feedback" element={<Feedback />} />
+      <Route path="/feedback1" element={<Feedback />} />
       <Route path="/support" element={<Support />} />
       <Route path="/booking-details/:id" element={<ViewBookingDetails />} />
+      <Route path="/payment" element={<Payment />} />
 
       <Route path="/register" element={<ChooseRegister />} />
       <Route path="/register/agent" element={<AgentRegister />} />
@@ -60,18 +61,13 @@ function App() {
       <Route path="/agent/view-bookings" element={<ViewBookings />} />
       <Route path="/agent/passengers/:tripId" element={<PassengerList />} />
       <Route path="/agent/bus-status" element={<BusStatus />} />
-      <Route path="/payment" element={<Payment />} />
+
 
       <Route path="/admin-login" element={<AdminLogin />} />
-
       <Route path="/admin-dashboard" element={<AdminDashboard />} />
-
       <Route path="/users" element={<ManageUsers />} />
-
       <Route path="/buses" element={<ApproveBuses />} />
-
       <Route path="/bus-details" element={<BusDetails />} />
-
       <Route path="/feedback" element={<ViewFeedback />} />
 
 
