@@ -1,55 +1,65 @@
 package com.busbooking.entities;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-
-@NoArgsConstructor
+@Entity
+@Table(
+    name = "users",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email"),
+        @UniqueConstraint(columnNames = "phone")
+    }
+)
 @Getter
 @Setter
-@ToString(exclude = "passwordHash")
-@Entity
-@Table(name="users")
-@AttributeOverride(name="id",column = @Column(name ="user_id"))
-public class User extends BaseClass{
-	@Column(name="first_name", nullable = false, length=50)
-	private String firstName;
-	@Column(name = "middle_name", length = 50)
-	private String middleName;
-	@Column(name = "last_name", nullable = false, length = 50)
-	private String lastName;
-	@Column(nullable = false, unique = true, length = 100)
-	private String email;
-	@Column(nullable = false, unique = true, length = 15)
-	private String phone;
-	@Column(name = "password_hash", nullable = false,length = 255)
-	private String passwordHash;
-	@Enumerated(EnumType.STRING)
-	@Column(name = "role", nullable = false)
-	private UserRole role;
-	@Column(name = "profile_photo")
-	private String profilePhoto;
-	@Enumerated(EnumType.STRING)
-	private Gender gender;
-	@Column(name = "date_of_birth")
-	private LocalDate dob;
-	@Column(name = "is_verified")
-	private Boolean isVerified = false;
-	@Column(name = "is_active")
-	private Boolean isActive = true;
-	@Column(name = "last_login")
-	private LocalDateTime lastLogin;
-	
+@NoArgsConstructor
+public class User extends BaseEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Long userId;
+
+    @NotBlank(message = "First name is required")
+    @Column(name = "first_name", nullable = false, length = 50)
+    private String firstName;
+
+    @Column(name = "middle_name", length = 50)
+    private String middleName;
+
+    @NotBlank(message = "Last name is required")
+    @Column(name = "last_name", nullable = false, length = 50)
+    private String lastName;
+
+    @Email(message = "Invalid email")
+    @NotBlank(message = "Email is required")
+    @Column(nullable = false, length = 100)
+    private String email;
+
+    @Pattern(regexp = "^[6-9]\\d{9}$", message = "Invalid mobile number")
+    @Column(nullable = false, length = 10)
+    private String phone;
+
+    @NotBlank(message = "Password is required")
+    @Size(min = 6, max = 100)
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
+    private Gender gender;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 15)
+    private UserRole role;
+
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive = true;
 }
