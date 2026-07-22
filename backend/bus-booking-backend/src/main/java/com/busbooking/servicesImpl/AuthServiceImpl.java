@@ -10,12 +10,15 @@ import com.busbooking.dtos.ApiResponse;
 import com.busbooking.dtos.LoginRequest;
 import com.busbooking.dtos.LoginResponse;
 import com.busbooking.dtos.RegisterRequest;
+import com.busbooking.dtos.ResetPasswordRequest;
 import com.busbooking.entities.Customer;
 import com.busbooking.entities.User;
 import com.busbooking.entities.UserRole;
 import com.busbooking.repository.CustomerRepository;
+import com.busbooking.repository.EmailOtpRepository;
 import com.busbooking.repository.UserRepository;
 import com.busbooking.services.AuthService;
+import com.busbooking.services.OtpService;
 import com.busbooking.security.JwtUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -26,6 +29,8 @@ import lombok.RequiredArgsConstructor;
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
+    private final OtpService otpService;
+    private final EmailOtpRepository emailOtpRepository;
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
@@ -58,8 +63,19 @@ public class AuthServiceImpl implements AuthService {
         user.setRole(UserRole.CUSTOMER);
 
         user.setIsActive(true);
+        
+        if (!otpService.isRegistrationOtpVerified(
+                request.getEmail())) {
 
+        	throw new InvalidCredentialsException(
+        	        "Please verify your email first.");
+        }
+        
         User savedUser = userRepository.save(user);
+        
+        emailOtpRepository.deleteByEmailAndPurpose(
+                request.getEmail(),
+                "REGISTER");
 
         Customer customer = new Customer();
 
@@ -95,5 +111,11 @@ public class AuthServiceImpl implements AuthService {
                 token
         );
     }
+
+	@Override
+	public ApiResponse resetPassword(ResetPasswordRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

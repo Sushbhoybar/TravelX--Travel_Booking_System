@@ -9,7 +9,10 @@ import com.busbooking.dtos.ApiResponse;
 import com.busbooking.dtos.LoginRequest;
 import com.busbooking.dtos.LoginResponse;
 import com.busbooking.dtos.RegisterRequest;
+import com.busbooking.dtos.SendOtpRequest;
+import com.busbooking.dtos.VerifyOtpRequest;
 import com.busbooking.services.AuthService;
+import com.busbooking.services.OtpService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
 
     private final AuthService authService;
+    private final OtpService otpService;
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse> register(
@@ -37,6 +41,24 @@ public class AuthController {
             @Valid @RequestBody LoginRequest request) {
 
         return ResponseEntity.ok(authService.login(request));
+    }
+    
+    @PostMapping("/send-registration-otp")
+    public ResponseEntity<ApiResponse> sendRegistrationOtp(
+            @Valid @RequestBody SendOtpRequest request) {
+
+        return ResponseEntity.ok(
+                otpService.sendRegistrationOtp(request.getEmail()));
+    }
+    
+    @PostMapping("/verify-registration-otp")
+    public ResponseEntity<ApiResponse> verifyRegistrationOtp(
+            @Valid @RequestBody VerifyOtpRequest request) {
+
+        return ResponseEntity.ok(
+                otpService.verifyRegistrationOtp(
+                        request.getEmail(),
+                        request.getOtp()));
     }
 
 }
