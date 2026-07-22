@@ -11,7 +11,8 @@ public interface AuthService {
     ApiResponse register(RegisterRequest request);
 
     LoginResponse login(LoginRequest request);
-    
-    ApiResponse resetPassword(ResetPasswordRequest request);
+
+    ApiResponse resetPassword(
+            ResetPasswordRequest request);
 
 }

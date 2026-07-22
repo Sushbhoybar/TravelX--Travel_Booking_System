@@ -4,19 +4,32 @@ import com.busbooking.dtos.ApiResponse;
 
 public interface OtpService {
 
-	ApiResponse sendRegistrationOtp(String email);
+    // ==========================
+    // Registration OTP
+    // ==========================
 
-	ApiResponse verifyRegistrationOtp(String email, String otp);
+    ApiResponse sendRegistrationOtp(String email);
 
-	boolean isRegistrationOtpVerified(String email);
-	
-	ApiResponse sendForgotPasswordOtp(String email);
+    boolean verifyRegistrationOtp(
+            String email,
+            String otp);
 
-	boolean verifyForgotPasswordOtp(
-	        String email,
-	        String otp);
+    boolean isRegistrationOtpVerified(
+            String email);
 
-	boolean isForgotPasswordOtpVerified(
-	        String email);
+
+    // ==========================
+    // Forgot Password OTP
+    // ==========================
+
+    ApiResponse sendForgotPasswordOtp(
+            String email);
+
+    boolean verifyForgotPasswordOtp(
+            String email,
+            String otp);
+
+    boolean isForgotPasswordOtpVerified(
+            String email);
 
 }

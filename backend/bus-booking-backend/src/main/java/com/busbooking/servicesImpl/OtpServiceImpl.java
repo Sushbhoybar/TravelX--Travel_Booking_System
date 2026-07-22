@@ -6,10 +6,10 @@ import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
-import com.busbooking.custom_exception.InvalidCredentialsException;
 import com.busbooking.dtos.ApiResponse;
 import com.busbooking.entities.EmailOtp;
 import com.busbooking.repository.EmailOtpRepository;
+import com.busbooking.repository.UserRepository;
 import com.busbooking.services.EmailService;
 import com.busbooking.services.OtpService;
 
@@ -19,11 +19,20 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OtpServiceImpl implements OtpService {
 
-    private final EmailOtpRepository emailOtpRepository;
+    private final EmailOtpRepository otpRepository;
+    private final UserRepository userRepository;
     private final EmailService emailService;
+
+    // =====================================================
+    // Registration OTP
+    // =====================================================
 
     @Override
     public ApiResponse sendRegistrationOtp(String email) {
+
+        if (userRepository.existsByEmail(email)) {
+            return new ApiResponse("Email already registered");
+        }
 
         String otp = String.valueOf(
                 100000 + new Random().nextInt(900000));
@@ -38,14 +47,14 @@ public class OtpServiceImpl implements OtpService {
         emailOtp.setExpiryTime(
                 LocalDateTime.now().plusMinutes(5));
 
-        emailOtpRepository.save(emailOtp);
+        otpRepository.save(emailOtp);
 
         String subject = "TravelX Registration OTP";
 
         String body = """
                 Welcome to TravelX
 
-                Your OTP is:
+                Your Registration OTP is:
 
                 %s
 
@@ -62,47 +71,52 @@ public class OtpServiceImpl implements OtpService {
     }
 
     @Override
-    public ApiResponse verifyRegistrationOtp(
+    public boolean verifyRegistrationOtp(
             String email,
             String otp) {
 
         Optional<EmailOtp> optionalOtp =
-                emailOtpRepository.findTopByEmailAndPurposeOrderByCreatedAtDesc(
+                otpRepository.findTopByEmailAndPurposeOrderByCreatedAtDesc(
                         email,
                         "REGISTER");
 
         if (optionalOtp.isEmpty()) {
-            throw new InvalidCredentialsException("OTP not found");
+            return false;
         }
 
         EmailOtp emailOtp = optionalOtp.get();
 
-        if (Boolean.TRUE.equals(emailOtp.getVerified())) {
-            throw new InvalidCredentialsException("OTP already verified");
+        if (emailOtp.getVerified()) {
+            return false;
         }
 
-        if (LocalDateTime.now().isAfter(emailOtp.getExpiryTime())) {
-            throw new InvalidCredentialsException("OTP expired");
+        if (LocalDateTime.now().isAfter(
+                emailOtp.getExpiryTime())) {
+            return false;
         }
 
         if (!emailOtp.getOtpCode().equals(otp)) {
 
-            emailOtp.setAttempts(emailOtp.getAttempts() + 1);
-            emailOtpRepository.save(emailOtp);
+            emailOtp.setAttempts(
+                    emailOtp.getAttempts() + 1);
 
-            throw new InvalidCredentialsException("Invalid OTP");
+            otpRepository.save(emailOtp);
+
+            return false;
         }
 
         emailOtp.setVerified(true);
-        emailOtpRepository.save(emailOtp);
 
-        return new ApiResponse("OTP Verified Successfully");
+        otpRepository.save(emailOtp);
+
+        return true;
     }
 
     @Override
-    public boolean isRegistrationOtpVerified(String email) {
+    public boolean isRegistrationOtpVerified(
+            String email) {
 
-        return emailOtpRepository
+        return otpRepository
                 .findTopByEmailAndPurposeAndVerifiedOrderByCreatedAtDesc(
                         email,
                         "REGISTER",
@@ -110,22 +124,106 @@ public class OtpServiceImpl implements OtpService {
                 .isPresent();
     }
 
-	@Override
-	public ApiResponse sendForgotPasswordOtp(String email) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    // =====================================================
+    // Forgot Password OTP
+    // =====================================================
 
-	@Override
-	public boolean verifyForgotPasswordOtp(String email, String otp) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public ApiResponse sendForgotPasswordOtp(
+            String email) {
 
-	@Override
-	public boolean isForgotPasswordOtpVerified(String email) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+        if (!userRepository.existsByEmail(email)) {
+            return new ApiResponse("Email not registered");
+        }
+
+        String otp = String.valueOf(
+                100000 + new Random().nextInt(900000));
+
+        EmailOtp emailOtp = new EmailOtp();
+
+        emailOtp.setEmail(email);
+        emailOtp.setOtpCode(otp);
+        emailOtp.setPurpose("FORGOT_PASSWORD");
+        emailOtp.setVerified(false);
+        emailOtp.setAttempts(0);
+        emailOtp.setExpiryTime(
+                LocalDateTime.now().plusMinutes(5));
+
+        otpRepository.save(emailOtp);
+
+        String subject = "TravelX Password Reset OTP";
+
+        String body = """
+                Hello,
+
+                Your Password Reset OTP is:
+
+                %s
+
+                This OTP is valid for 5 minutes.
+
+                Do not share this OTP.
+
+                TravelX Team
+                """.formatted(otp);
+
+        emailService.sendEmail(email, subject, body);
+
+        return new ApiResponse("OTP Sent Successfully");
+    }
+
+    @Override
+    public boolean verifyForgotPasswordOtp(
+            String email,
+            String otp) {
+
+        Optional<EmailOtp> optionalOtp =
+                otpRepository.findTopByEmailAndPurposeOrderByCreatedAtDesc(
+                        email,
+                        "FORGOT_PASSWORD");
+
+        if (optionalOtp.isEmpty()) {
+            return false;
+        }
+
+        EmailOtp emailOtp = optionalOtp.get();
+
+        if (emailOtp.getVerified()) {
+            return false;
+        }
+
+        if (LocalDateTime.now().isAfter(
+                emailOtp.getExpiryTime())) {
+            return false;
+        }
+
+        if (!emailOtp.getOtpCode().equals(otp)) {
+
+            emailOtp.setAttempts(
+                    emailOtp.getAttempts() + 1);
+
+            otpRepository.save(emailOtp);
+
+            return false;
+        }
+
+        emailOtp.setVerified(true);
+
+        otpRepository.save(emailOtp);
+
+        return true;
+    }
+
+    @Override
+    public boolean isForgotPasswordOtpVerified(
+            String email) {
+
+        return otpRepository
+                .findTopByEmailAndPurposeAndVerifiedOrderByCreatedAtDesc(
+                        email,
+                        "FORGOT_PASSWORD",
+                        true)
+                .isPresent();
+    }
 
 }
