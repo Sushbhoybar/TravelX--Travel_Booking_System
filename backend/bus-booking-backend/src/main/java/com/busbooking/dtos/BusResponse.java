@@ -1,6 +1,7 @@
 package com.busbooking.dtos;
 
 import com.busbooking.entities.BusStatus;
+import com.busbooking.entities.BusType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,9 +13,15 @@ import lombok.Setter;
 public class BusResponse {
 
     private Long busId;
+
     private String busName;
-    private String agentName;
-    private String numberPlate;
+
+    private String registrationNumber;
+
+    private BusType busType;
+
+    private Integer totalSeats;
+
     private BusStatus status;
 
 }
