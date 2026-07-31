@@ -38,16 +38,22 @@ public class SecurityConfig {
 
                 	    .requestMatchers(
                 	        "/api/auth/**",
-                	        "/api/test/**"
+                	        "/api/test/**",
+                	        "/api/routes/**",
+                	        "/api/schedules/**",
+                	        "/api/agent/register"
                 	    ).permitAll()
 
                 	    .requestMatchers("/api/admin/**").permitAll()
+                	    .requestMatchers("/uploads/**").permitAll()
 
                 	    .requestMatchers(
                 	        "/v3/api-docs/**",
                 	        "/swagger-ui/**",
                 	        "/swagger-ui.html"
                 	    ).permitAll()
+                	    
+                	    .requestMatchers("/api/agent/**").hasRole("AGENT")
 
                 	    .anyRequest()
                 	    .authenticated()
