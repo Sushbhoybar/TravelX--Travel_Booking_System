@@ -25,5 +25,16 @@ public interface BusRepository extends JpaRepository<Bus, Long> {
 	long countByAgentAndStatus(
 	        User agent,
 	        BusStatus status);
+	
+	long countByStatus(BusStatus status);
+	
+	//manage Bus Approval
+	
+	List<Bus> findAllByOrderByStatusAscBusNameAsc();
+
+	List<Bus> findByStatus(BusStatus status);
+	
+	List<Bus> findByAgentOrderByCreatedAtDesc(
+	        User agent);
 
 }

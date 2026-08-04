@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.busbooking.custom_exception.BusinessException;
 import com.busbooking.custom_exception.DuplicateResourceException;
 import com.busbooking.custom_exception.ResourceNotFoundException;
 import com.busbooking.dtos.AddBusRequest;
+import com.busbooking.dtos.AgentBusResponse;
 import com.busbooking.dtos.ApiResponse;
 import com.busbooking.dtos.BusDetailsResponse;
 import com.busbooking.dtos.BusResponse;
@@ -27,6 +29,7 @@ import com.busbooking.repository.BusImageRepository;
 import com.busbooking.repository.BusRepository;
 import com.busbooking.repository.SeatRepository;
 import com.busbooking.repository.UserRepository;
+import com.busbooking.dtos.AgentBusDetailsResponse;
 import com.busbooking.services.BusService;
 import com.busbooking.services.FileStorageService;
 
@@ -149,43 +152,59 @@ public class BusServiceImpl implements BusService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<BusResponse> getMyBuses(String email) {
+    public List<AgentBusResponse> getMyBuses(String email) {
 
-        logger.info("Fetching buses for agent {}", email);
+        logger.info("Fetching agent buses for {}", email);
 
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Agent not found"));
+        User agent =
+                userRepository.findByEmail(email)
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException(
+                                        "Agent not found"));
 
-        List<Bus> buses = busRepository.findByAgent(user);
+        List<Bus> buses =
+                busRepository.findByAgentOrderByCreatedAtDesc(agent);
 
-        List<BusResponse> response = new ArrayList<>();
+        List<AgentBusResponse> response =
+                new ArrayList<>();
 
         for (Bus bus : buses) {
 
-            response.add(
+            AgentBusResponse dto =
+                    new AgentBusResponse();
 
-                    new BusResponse(
+            dto.setBusId(
+                    bus.getBusId());
 
-                            bus.getBusId(),
+            dto.setBusName(
+                    bus.getBusName());
 
-                            bus.getBusName(),
+            dto.setRegistrationNumber(
+                    bus.getRegistrationNumber());
 
-                            bus.getRegistrationNumber(),
+            dto.setBusType(
+                    bus.getBusType());
 
-                            bus.getBusType(),
+            dto.setTotalSeats(
+                    bus.getTotalSeats());
 
-                            bus.getTotalSeats(),
+            dto.setStatus(
+                    bus.getStatus());
 
-                            bus.getStatus()
+            dto.setAdminRemarks(
+                    bus.getAdminRemarks());
 
-                    )
+            dto.setCanEdit(
+                    bus.getStatus() ==
+                    BusStatus.REJECTED);
 
-            );
+            dto.setCanDelete(
+                    bus.getStatus() !=
+                    BusStatus.APPROVED);
+
+            response.add(dto);
 
         }
-
-        logger.info("{} buses found", response.size());
 
         return response;
 
@@ -193,13 +212,25 @@ public class BusServiceImpl implements BusService {
 
     @Override
     @Transactional(readOnly = true)
-    public BusDetailsResponse getBusDetails(Long busId) {
+    public BusDetailsResponse getBusDetails(
+            Long busId,
+            String email) {
 
         logger.info("Fetching bus details {}", busId);
 
-        Bus bus = busRepository.findById(busId)
+        User agent =
+                userRepository.findByEmail(email)
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException(
+                                        "Agent not found"));
+
+        Bus bus =
+                busRepository.findByBusIdAndAgent(
+                        busId,
+                        agent)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Bus Not Found"));
+                        new ResourceNotFoundException(
+                                "Bus not found"));
 
         BusDetailsResponse response = new BusDetailsResponse();
 
@@ -246,14 +277,40 @@ public class BusServiceImpl implements BusService {
     }
 
     @Override
-    public ApiResponse updateBus(Long busId,
-            UpdateBusRequest request) {
+    public ApiResponse updateBus(
+            Long busId,
+            UpdateBusRequest request,
+            String email) {
 
         logger.info("Updating bus {}", busId);
 
-        Bus bus = busRepository.findById(busId)
+        User agent =
+                userRepository.findByEmail(email)
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException(
+                                        "Agent not found"));
+
+        Bus bus =
+                busRepository.findByBusIdAndAgent(
+                        busId,
+                        agent)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Bus Not Found"));
+                        new ResourceNotFoundException(
+                                "Bus not found"));
+        
+        if (bus.getStatus() == BusStatus.PENDING) {
+
+            throw new BusinessException(
+                    "This bus is currently under admin review and cannot be edited.");
+
+        }
+
+        if (bus.getStatus() == BusStatus.APPROVED) {
+
+            throw new BusinessException(
+                    "Approved buses cannot be edited.");
+
+        }
 
         bus.setBusName(request.getBusName());
 
@@ -317,6 +374,15 @@ public class BusServiceImpl implements BusService {
 	        bus.setPollutionCertificate(
 	                pollutionCertificate);
         }
+        
+        if (bus.getStatus() == BusStatus.REJECTED) {
+
+            bus.setStatus(
+                    BusStatus.PENDING);
+
+            bus.setAdminRemarks(null);
+
+        }
         busRepository.save(bus);
 
         if (request.getBusImages() != null
@@ -335,13 +401,39 @@ public class BusServiceImpl implements BusService {
     }
 
     @Override
-    public ApiResponse deleteBus(Long busId) {
+    public ApiResponse deleteBus(
+            Long busId,
+            String email) {
 
         logger.info("Deleting bus {}", busId);
 
-        Bus bus = busRepository.findById(busId)
+        User agent =
+                userRepository.findByEmail(email)
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException(
+                                        "Agent not found"));
+
+        Bus bus =
+                busRepository.findByBusIdAndAgent(
+                        busId,
+                        agent)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Bus Not Found"));
+                        new ResourceNotFoundException(
+                                "Bus not found"));
+        
+        if (bus.getStatus() == BusStatus.PENDING) {
+
+            throw new BusinessException(
+                    "This bus is currently under admin review and cannot be deleted.");
+
+        }
+
+        if (bus.getStatus() == BusStatus.APPROVED) {
+
+            throw new BusinessException(
+                    "Approved buses cannot be deleted.");
+
+        }
 
         seatRepository.deleteByBus(bus);
 
@@ -415,6 +507,92 @@ public class BusServiceImpl implements BusService {
 
         logger.info("{} seats generated",
                 seats.size());
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public AgentBusDetailsResponse getBus(
+            Long busId,
+            String email) {
+
+        logger.info(
+                "Fetching bus {} for editing",
+                busId);
+
+        User agent =
+                userRepository.findByEmail(email)
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException(
+                                        "Agent not found"));
+
+        Bus bus =
+                busRepository.findByBusIdAndAgent(
+                        busId,
+                        agent)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Bus not found"));
+
+        AgentBusDetailsResponse dto =
+                new AgentBusDetailsResponse();
+
+        dto.setBusId(
+                bus.getBusId());
+
+        dto.setBusName(
+                bus.getBusName());
+
+        dto.setRegistrationNumber(
+                bus.getRegistrationNumber());
+
+        dto.setBusType(
+                bus.getBusType());
+
+        dto.setTotalSeats(
+                bus.getTotalSeats());
+
+        dto.setAmenities(
+                bus.getAmenities());
+
+        dto.setInsuranceDocument(
+                bus.getInsuranceDocument());
+
+        dto.setRegistrationCertificate(
+                bus.getRegistrationCertificate());
+
+        dto.setFitnessCertificate(
+                bus.getFitnessCertificate());
+
+        dto.setPermitDocument(
+                bus.getPermitDocument());
+
+        dto.setPollutionCertificate(
+                bus.getPollutionCertificate());
+
+        dto.setStatus(
+                bus.getStatus());
+
+        dto.setAdminRemarks(
+                bus.getAdminRemarks());
+        
+        dto.setEditable(
+                bus.getStatus() ==
+                BusStatus.REJECTED);
+
+        List<String> images =
+                new ArrayList<>();
+
+        for (BusImage image : bus.getImages()) {
+
+            images.add(
+                    image.getImageUrl());
+
+        }
+
+        dto.setImages(images);
+
+        return dto;
 
     }
     

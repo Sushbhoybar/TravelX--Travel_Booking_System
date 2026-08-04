@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UpdateBusRequest {
-    
+
     @NotBlank(message = "Bus Name is required")
     private String busName;
 
@@ -28,25 +28,27 @@ public class UpdateBusRequest {
 
     private String amenities;
 
-    // Documents
+    /*
+     * Documents are OPTIONAL during update.
+     * If a new file is uploaded, replace the existing one.
+     * Otherwise keep the existing document.
+     */
 
-    @NotNull(message = "Insurance Document is required")
     private MultipartFile insuranceDocument;
 
-    @NotNull(message = "Registration Certificate is required")
     private MultipartFile registrationCertificate;
 
-    @NotNull(message = "Fitness Certificate is required")
     private MultipartFile fitnessCertificate;
 
-    @NotNull(message = "Permit Document is required")
     private MultipartFile permitDocument;
 
-    @NotNull(message = "Pollution Certificate is required")
     private MultipartFile pollutionCertificate;
 
-    // Multiple Bus Images
-
+    /*
+     * Optional.
+     * If images are uploaded, replace old images.
+     * Otherwise keep existing images.
+     */
     private List<MultipartFile> busImages;
 
 }

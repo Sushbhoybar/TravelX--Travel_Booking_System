@@ -4,16 +4,17 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
 
 import com.busbooking.dtos.AddBusRequest;
+import com.busbooking.dtos.AgentBusDetailsResponse;
+import com.busbooking.dtos.AgentBusResponse;
 import com.busbooking.dtos.ApiResponse;
 import com.busbooking.dtos.BusDetailsResponse;
-import com.busbooking.dtos.BusResponse;
 import com.busbooking.dtos.UpdateBusRequest;
 import com.busbooking.services.BusService;
 
@@ -33,21 +34,19 @@ public class AgentBusController {
     )
     public ResponseEntity<ApiResponse> addBus(
 
-    		@Valid
-    		@ModelAttribute AddBusRequest request,
+            @Valid
+            @ModelAttribute AddBusRequest request,
 
             Authentication authentication
 
     ) {
-    	
-    	System.out.println("========== CONTROLLER REACHED ==========");
-
-        System.out.println("Authentication = " + authentication);
 
         String email = authentication.getName();
 
         ApiResponse response =
-                busService.addBus(request, email);
+                busService.addBus(
+                        request,
+                        email);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -56,47 +55,96 @@ public class AgentBusController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BusResponse>> getMyBuses(
+    public ResponseEntity<List<AgentBusResponse>> getMyBuses(
             Principal principal) {
 
         return ResponseEntity.ok(
                 busService.getMyBuses(
                         principal.getName()));
+
     }
 
     @GetMapping("/{busId}")
     public ResponseEntity<BusDetailsResponse> getBusDetails(
-            @PathVariable Long busId) {
+
+            @PathVariable Long busId,
+
+            Principal principal
+
+    ) {
 
         return ResponseEntity.ok(
-                busService.getBusDetails(busId));
+
+                busService.getBusDetails(
+                        busId,
+                        principal.getName())
+
+        );
+
+    }
+
+    @GetMapping("/{busId}/edit")
+    public ResponseEntity<AgentBusDetailsResponse> getBus(
+
+            @PathVariable Long busId,
+
+            Principal principal
+
+    ) {
+
+        return ResponseEntity.ok(
+
+                busService.getBus(
+                        busId,
+                        principal.getName())
+
+        );
+
     }
 
     @PutMapping(
-            value="/{busId}",
+            value = "/{busId}",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     public ResponseEntity<ApiResponse> updateBus(
 
             @PathVariable Long busId,
-            
-            @Valid
-            @ModelAttribute UpdateBusRequest request
 
-    ){
+            @Valid
+            @ModelAttribute UpdateBusRequest request,
+
+            Principal principal
+
+    ) {
 
         return ResponseEntity.ok(
+
                 busService.updateBus(
                         busId,
-                        request));
+                        request,
+                        principal.getName())
+
+        );
+
     }
 
     @DeleteMapping("/{busId}")
     public ResponseEntity<ApiResponse> deleteBus(
-            @PathVariable Long busId) {
+
+            @PathVariable Long busId,
+
+            Principal principal
+
+    ) {
 
         return ResponseEntity.ok(
-                busService.deleteBus(busId));
+
+                busService.deleteBus(
+                        busId,
+                        principal.getName())
+
+        );
+
     }
 
 }

@@ -50,10 +50,14 @@ public class Bus extends BaseEntity {
 
     @Column(name = "pollution_certificate")
     private String pollutionCertificate;
+    
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private BusStatus status = BusStatus.PENDING;
+    
+    @Column(name = "admin_remarks", columnDefinition = "TEXT")
+    private String adminRemarks;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

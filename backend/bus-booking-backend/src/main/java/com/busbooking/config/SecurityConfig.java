@@ -44,7 +44,8 @@ public class SecurityConfig {
                 	        "/api/agent/register"
                 	    ).permitAll()
 
-                	    .requestMatchers("/api/admin/**").permitAll()
+                	    .requestMatchers("/api/admin/**")
+                	    .hasRole("ADMIN")
                 	    .requestMatchers("/uploads/**").permitAll()
 
                 	    .requestMatchers(
