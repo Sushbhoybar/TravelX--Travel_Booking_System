@@ -1,54 +1,80 @@
-```gitignore
-# Dependencies
-node_modules/
+# =====================================================
+# Java / Spring Boot
+# =====================================================
+target/
+build/
+bin/
+out/
+*.class
+*.jar
+*.war
+*.ear
 
-# Build output
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+.gradle/
+
+# =====================================================
+# Node / React
+# =====================================================
+node_modules/
 dist/
 build/
 
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# =====================================================
+# Uploads (Generated Files)
+# =====================================================
+backend/bus-booking-backend/uploads/
 
+# =====================================================
+# Environment
+# =====================================================
+.env
+.env.*
+!.env.example
+
+# =====================================================
 # Logs
-logs
+# =====================================================
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Cache
-.cache/
-.parcel-cache/
-.vite/
+# =====================================================
+# IDE
+# =====================================================
+.vscode/
+.idea/
+*.iml
 
-# OS files
+# Eclipse / STS
+.project
+.classpath
+.settings/
+
+# =====================================================
+# OS
+# =====================================================
 .DS_Store
 Thumbs.db
 
-# IDE files
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Coverage reports
+# =====================================================
+# Cache
+# =====================================================
+.cache/
+.parcel-cache/
+.vite/
 coverage/
-
-# Temporary files
 tmp/
 temp/
 
-# Package manager
+# =====================================================
+# Package Managers
+# =====================================================
 .pnp
 .pnp.js
-
-# Optional lock files (keep if working in team)
-# package-lock.json
-# yarn.lock
-# pnpm-lock.yaml
-```
