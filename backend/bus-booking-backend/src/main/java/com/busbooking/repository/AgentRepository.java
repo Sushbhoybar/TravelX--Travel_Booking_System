@@ -1,5 +1,6 @@
 package com.busbooking.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,6 +25,12 @@ public interface AgentRepository
 
     boolean existsByAgencyName(String agencyName);
 
-    boolean existsByStatus(ApprovalStatus status);
+    //boolean existsByStatus(ApprovalStatus status);
+    
+    long countByStatus(ApprovalStatus status);
+    
+    List<Agent> findAllByOrderByStatusAscAgencyNameAsc();
+
+    List<Agent> findByStatus(ApprovalStatus status);
 
 }

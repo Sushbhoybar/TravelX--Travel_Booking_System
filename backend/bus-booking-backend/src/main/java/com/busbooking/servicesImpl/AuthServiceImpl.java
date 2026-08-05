@@ -4,6 +4,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.busbooking.entities.Agent;
+import com.busbooking.entities.ApprovalStatus;
+import com.busbooking.repository.AgentRepository;
 import com.busbooking.custom_exception.DuplicateResourceException;
 import com.busbooking.custom_exception.InvalidCredentialsException;
 import com.busbooking.dtos.ApiResponse;
@@ -30,6 +33,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final CustomerRepository customerRepository;
+    private final AgentRepository agentRepository;
     private final EmailOtpRepository emailOtpRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
@@ -101,6 +105,7 @@ public class AuthServiceImpl implements AuthService {
                 .orElseThrow(() ->
                         new InvalidCredentialsException(
                                 "Invalid Email or Password"));
+        
 
         if (!passwordEncoder.matches(
                 request.getPassword(),
@@ -108,6 +113,35 @@ public class AuthServiceImpl implements AuthService {
 
             throw new InvalidCredentialsException(
                     "Invalid Email or Password");
+        }
+        
+     // Check Agent Approval Status
+        if (user.getRole() == UserRole.AGENT) {
+
+            Agent agent = agentRepository
+                    .findByUserUserId(user.getUserId())
+                    .orElseThrow(() ->
+                            new InvalidCredentialsException(
+                                    "Agent profile not found."));
+
+            switch (agent.getStatus()) {
+
+                case PENDING:
+                    throw new InvalidCredentialsException(
+                            "Your account is awaiting admin approval.");
+
+                case REJECTED:
+                    throw new InvalidCredentialsException(
+                            "Your registration has been rejected by the administrator.");
+
+                case SUSPENDED:
+                    throw new InvalidCredentialsException(
+                            "Your account has been suspended. Please contact the administrator.");
+
+                case APPROVED:
+                    // Continue login
+                    break;
+            }
         }
 
         String fullName =
