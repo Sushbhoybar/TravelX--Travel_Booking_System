@@ -3,17 +3,22 @@ package com.busbooking.services;
 import java.util.List;
 
 import com.busbooking.dtos.ApiResponse;
-import com.busbooking.dtos.CreateRouteRequest;
+import com.busbooking.dtos.RouteRequest;
 import com.busbooking.dtos.RouteResponse;
 
 public interface RouteService {
 
-    ApiResponse addRoute(CreateRouteRequest request);
+    ApiResponse addRoute(RouteRequest request);
 
     List<RouteResponse> getAllRoutes();
 
-    RouteResponse getRouteById(Long routeId);
+    RouteResponse getRoute(Long routeId);
 
-    ApiResponse deleteRoute(Long routeId);
+    ApiResponse updateRoute(
+            Long routeId,
+            RouteRequest request);
+
+    ApiResponse deleteRoute(
+            Long routeId);
 
 }
