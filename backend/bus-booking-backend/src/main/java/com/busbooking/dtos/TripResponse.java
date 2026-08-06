@@ -14,26 +14,22 @@ public class TripResponse {
 
     private Long tripId;
 
-    private Long busId;
-
     private String busName;
 
-    private Long routeId;
+    private String registrationNumber;
 
-    private String source;
+    private String sourceCity;
 
-    private String destination;
-
-    private String boardingPoint;
-
-    private String droppingPoint;
+    private String destinationCity;
 
     private LocalDateTime departureDateTime;
 
     private LocalDateTime arrivalDateTime;
 
-    private BigDecimal fare;
+    private BigDecimal baseFare;
 
-    private TripStatus status;
+    private Integer availableSeats;
+
+    private TripStatus tripStatus;
 
 }
