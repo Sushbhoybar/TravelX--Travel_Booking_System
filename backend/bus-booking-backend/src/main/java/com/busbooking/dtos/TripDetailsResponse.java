@@ -3,7 +3,6 @@ package com.busbooking.dtos;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.busbooking.entities.BusType;
 import com.busbooking.entities.TripStatus;
 
 import lombok.Getter;
@@ -19,26 +18,24 @@ public class TripDetailsResponse {
 
     private String busName;
 
-    private BusType busType;
-
-    private Integer totalSeats;
+    private String registrationNumber;
 
     private Long routeId;
 
-    private String source;
+    private String sourceCity;
 
-    private String destination;
-
-    private String boardingPoint;
-
-    private String droppingPoint;
+    private String destinationCity;
 
     private LocalDateTime departureDateTime;
 
     private LocalDateTime arrivalDateTime;
 
-    private BigDecimal fare;
+    private BigDecimal baseFare;
 
-    private TripStatus status;
+    private Integer totalSeats;
+
+    private Integer availableSeats;
+
+    private TripStatus tripStatus;
 
 }

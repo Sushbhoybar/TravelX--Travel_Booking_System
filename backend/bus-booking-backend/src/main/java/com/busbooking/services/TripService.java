@@ -3,27 +3,26 @@ package com.busbooking.services;
 import java.util.List;
 
 import com.busbooking.dtos.ApiResponse;
+import com.busbooking.dtos.CreateTripRequest;
+import com.busbooking.dtos.RouteResponse;
+import com.busbooking.dtos.AgentBusResponse;
 import com.busbooking.dtos.TripDetailsResponse;
-import com.busbooking.dtos.TripRequest;
 import com.busbooking.dtos.TripResponse;
 
 public interface TripService {
 
-    ApiResponse createTrip(
-            TripRequest request,
-            String email);
+    ApiResponse createTrip(CreateTripRequest request, String email);
 
-    List<TripResponse> getMyTrips(
-            String email);
+    List<TripResponse> getMyTrips(String email);
 
-    TripDetailsResponse getTrip(
-            Long tripId);
+    TripDetailsResponse getTripDetails(Long tripId, String email);
 
-    ApiResponse updateTrip(
-            Long tripId,
-            TripRequest request);
+    ApiResponse cancelTrip(Long tripId, String email);
 
-    ApiResponse deleteTrip(
-            Long tripId);
+    void updateTripStatuses();
+    
+    List<AgentBusResponse> getApprovedBuses(String email);
+
+    List<RouteResponse> getActiveRoutes();
 
 }

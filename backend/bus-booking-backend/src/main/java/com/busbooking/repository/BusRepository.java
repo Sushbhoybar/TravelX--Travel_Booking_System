@@ -36,5 +36,9 @@ public interface BusRepository extends JpaRepository<Bus, Long> {
 	
 	List<Bus> findByAgentOrderByCreatedAtDesc(
 	        User agent);
+	
+	List<Bus> findByAgentUserIdAndStatus(
+	        Long userId,
+	        BusStatus status);
 
 }
