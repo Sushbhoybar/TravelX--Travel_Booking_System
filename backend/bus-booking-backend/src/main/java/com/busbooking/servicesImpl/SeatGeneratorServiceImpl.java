@@ -355,29 +355,6 @@ public class SeatGeneratorServiceImpl
 
     }
     
-    private void setSeatFlags(Seat seat) {
-
-        switch (seat.getSeatPosition()) {
-
-            case LEFT_WINDOW:
-            case RIGHT_WINDOW:
-
-                seat.setWindowSeat(true);
-                seat.setAisleSeat(false);
-                break;
-
-            case LEFT_AISLE:
-            case RIGHT_AISLE:
-
-                seat.setWindowSeat(false);
-                seat.setAisleSeat(true);
-                break;
-
-            default:
-
-                seat.setWindowSeat(false);
-                seat.setAisleSeat(false);
-        }
-    }
+    
 
 }
