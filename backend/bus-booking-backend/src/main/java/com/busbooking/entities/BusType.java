@@ -10,6 +10,6 @@ public enum BusType {
 
     NON_AC_SLEEPER,
 
-    SEATER_SLEEPER
+    SEMI_SLEEPER
 
 }

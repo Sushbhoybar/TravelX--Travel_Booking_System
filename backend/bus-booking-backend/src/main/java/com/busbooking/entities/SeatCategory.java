@@ -1,6 +1,6 @@
 package com.busbooking.entities;
 
-public enum SeatType {
+public enum SeatCategory {
 
     SEATER,
     SLEEPER
