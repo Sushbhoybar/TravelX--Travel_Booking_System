@@ -8,6 +8,7 @@ import com.busbooking.dtos.RouteResponse;
 import com.busbooking.dtos.AgentBusResponse;
 import com.busbooking.dtos.TripDetailsResponse;
 import com.busbooking.dtos.TripResponse;
+import com.busbooking.dtos.TripSeatLayoutResponse;
 
 public interface TripService {
 
@@ -24,5 +25,6 @@ public interface TripService {
     List<AgentBusResponse> getApprovedBuses(String email);
 
     List<RouteResponse> getActiveRoutes();
+
 
 }

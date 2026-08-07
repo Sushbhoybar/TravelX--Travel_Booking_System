@@ -6,6 +6,12 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+
+import com.busbooking.dtos.SeatLayoutResponse;
+import com.busbooking.dtos.TripSeatLayoutResponse;
+import com.busbooking.entities.TripSeat;
+import com.busbooking.repository.TripSeatRepository;
 import com.busbooking.custom_exception.BusinessException;
 import com.busbooking.dtos.ApiResponse;
 import com.busbooking.dtos.RouteResponse;
@@ -23,6 +29,7 @@ import com.busbooking.repository.AgentRepository;
 import com.busbooking.repository.BusRepository;
 import com.busbooking.repository.RouteRepository;
 import com.busbooking.repository.TripRepository;
+import com.busbooking.services.TripSeatService;
 import com.busbooking.services.TripService;
 
 import lombok.RequiredArgsConstructor;
@@ -39,6 +46,10 @@ public class TripServiceImpl implements TripService {
 	private final RouteRepository routeRepository;
 
 	private final AgentRepository agentRepository;
+	
+	private final TripSeatService tripSeatService;
+	
+	private final TripSeatRepository tripSeatRepository;
 
 	// =========================================================
 	// CREATE TRIP
@@ -88,7 +99,9 @@ public class TripServiceImpl implements TripService {
 
 		trip.setTripStatus(TripStatus.SCHEDULED);
 
-		tripRepository.save(trip);
+		Trip savedTrip = tripRepository.save(trip);
+
+		tripSeatService.generateTripSeats(savedTrip);
 
 		return new ApiResponse("Trip created successfully.");
 
@@ -316,5 +329,6 @@ public class TripServiceImpl implements TripService {
 
 	    tripRepository.saveAll(trips);
 	}
+
 
 }

@@ -55,6 +55,8 @@ public class SecurityConfig {
                 	    ).permitAll()
                 	    
                 	    .requestMatchers("/api/agent/**").hasRole("AGENT")
+                	    .requestMatchers("/api/customer/trips/**")
+                	    .hasRole("CUSTOMER")
 
                 	    .anyRequest()
                 	    .authenticated()

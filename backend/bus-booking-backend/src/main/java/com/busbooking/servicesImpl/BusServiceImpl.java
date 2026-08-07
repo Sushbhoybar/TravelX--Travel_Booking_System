@@ -16,14 +16,11 @@ import com.busbooking.dtos.AddBusRequest;
 import com.busbooking.dtos.AgentBusResponse;
 import com.busbooking.dtos.ApiResponse;
 import com.busbooking.dtos.BusDetailsResponse;
-import com.busbooking.dtos.BusResponse;
 import com.busbooking.dtos.UpdateBusRequest;
 import com.busbooking.entities.Bus;
 import com.busbooking.entities.BusImage;
 import com.busbooking.entities.BusStatus;
-import com.busbooking.entities.DeckType;
-import com.busbooking.entities.Seat;
-import com.busbooking.entities.SeatType;
+import com.busbooking.services.SeatGeneratorService;
 import com.busbooking.entities.User;
 import com.busbooking.repository.BusImageRepository;
 import com.busbooking.repository.BusRepository;
@@ -50,7 +47,10 @@ public class BusServiceImpl implements BusService {
     private final SeatRepository seatRepository;
 
     private final BusImageRepository busImageRepository;
+
     private final FileStorageService fileStorageService;
+
+    private final SeatGeneratorService seatGeneratorService;
 
     @Override
     public ApiResponse addBus(AddBusRequest request,
@@ -135,14 +135,15 @@ public class BusServiceImpl implements BusService {
 
         Bus savedBus = busRepository.save(bus);
 
-        logger.info("Bus saved successfully with id {}",
+        logger.info(
+                "Bus saved successfully with id {}",
                 savedBus.getBusId());
 
         saveImages(
                 savedBus,
                 request.getBusImages());
 
-        generateSeats(savedBus);
+        seatGeneratorService.generateSeats(savedBus);
 
         logger.info("Bus registration completed.");
 
@@ -478,37 +479,7 @@ public class BusServiceImpl implements BusService {
         }
     }
     
-    private void generateSeats(Bus bus) {
-
-        logger.info("Generating seats...");
-
-        List<Seat> seats = new ArrayList<>();
-
-        for (int i = 1; i <= bus.getTotalSeats(); i++) {
-
-            Seat seat = new Seat();
-
-            seat.setBus(bus);
-
-            seat.setSeatNumber("S" + i);
-
-            seat.setDeck(DeckType.LOWER);
-
-            seat.setSeatType(SeatType.SEATER);
-
-            seat.setIsWindow(
-                    i % 4 == 1 || i % 4 == 0);
-
-            seats.add(seat);
-
-        }
-
-        seatRepository.saveAll(seats);
-
-        logger.info("{} seats generated",
-                seats.size());
-
-    }
+    
 
     @Override
     @Transactional(readOnly = true)
